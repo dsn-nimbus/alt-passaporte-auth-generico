@@ -1,6 +1,6 @@
 "use strict";
 
-describe('alt.koopon.passaporte-auth-generico', function() {
+describe('alt.passaporte-auth-generico', function() {
      var _windowMock;
      var _locationMock;
      var _httpMock;
@@ -17,7 +17,7 @@ describe('alt.koopon.passaporte-auth-generico', function() {
      var PassaporteService;
      var _info;
 
-     beforeEach(module('alt.koopon.passaporte-auth-generico', function($provide, PaginaUsuarioLogadoProvider) {
+     beforeEach(module('alt.passaporte-auth-generico', function($provide, PaginaUsuarioLogadoProvider) {
           _info = "YWxlc3NhbmRyYW1hY3Vsb0BnbWFpbC5jb206Pz8-Pz8-Pz8";
 
           PaginaUsuarioLogadoProvider.url = '/abc';

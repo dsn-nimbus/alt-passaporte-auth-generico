@@ -1,7 +1,7 @@
 ;(function(ng) {
   "use strict";
 
-  ng.module('alt.koopon.passaporte-auth-generico', ['emd.ng-xtorage'])
+  ng.module('alt.passaporte-auth-generico', ['emd.ng-xtorage'])
   .constant('CHAVE_USUARIO', 'pass_usuario_auth')
   .constant('CHAVE_INFORMACOES', 'info')
   .constant('PASSAPORTE_API_AUTHORIZATION_BASE',  'https://passaporte2-dev.alterdata.com.br/passaporte-rest-api/rest/authorization')
