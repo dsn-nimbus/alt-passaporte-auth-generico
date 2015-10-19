@@ -8,6 +8,9 @@
   .config(['$httpProvider', function($httpProvider) {
     delete $httpProvider.defaults.headers.common['X-Requested-With']; // fix para que não vá OPTIONS ao invés de GET na requisição feita ao servidor
   }])
+  .config(['$locationProvider', function($locationProvider) {
+    $locationProvider.html5Mode(true);
+  }])
   .provider('PaginaUsuarioLogado', function() {
     this.url = '/';
 
