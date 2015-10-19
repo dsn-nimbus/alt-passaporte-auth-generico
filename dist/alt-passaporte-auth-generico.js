@@ -1,7 +1,7 @@
 ;(function(ng) {
   "use strict";
 
-  ng.module('alt.passaporte-auth-generico', ['emd.ng-xtorage'])
+  ng.module('alt.passaporte-auth-generico', [])
   .constant('CHAVE_USUARIO', 'pass_usuario_auth')
   .constant('CHAVE_INFORMACOES', 'info')
   .constant('PASSAPORTE_API_AUTHORIZATION_BASE',  'https://passaporte2-dev.alterdata.com.br/passaporte-rest-api/rest/authorization')
@@ -28,8 +28,8 @@
                   });
     };
   }])
-  .service('UsuarioInfo', ['$window', '$log', '$xtorage', 'LeitorUrl', 'PassaporteService', 'CHAVE_USUARIO', 'CHAVE_INFORMACOES', 'PaginaUsuarioLogado',
-  function($window, $log, $xtorage, LeitorUrl, PassaporteService, CHAVE_USUARIO, CHAVE_INFORMACOES, PaginaUsuarioLogado) {
+  .service('UsuarioInfo', ['$window', '$log', 'LeitorUrl', 'PassaporteService', 'CHAVE_USUARIO', 'CHAVE_INFORMACOES', 'PaginaUsuarioLogado',
+  function($window, $log, LeitorUrl, PassaporteService, CHAVE_USUARIO, CHAVE_INFORMACOES, PaginaUsuarioLogado) {
 
     var _infoTokenPassaporte = LeitorUrl.getValorPor(CHAVE_INFORMACOES);
 
@@ -37,7 +37,7 @@
       PassaporteService
         .pegaInformacoesPorToken(_infoTokenPassaporte)
         .then(function(usuario) {
-          $xtorage.save(CHAVE_USUARIO, usuario);
+          $window.localStorage.setItem(CHAVE_USUARIO, JSON.stringify(usuario));
           $window.location.replace(PaginaUsuarioLogado);
         })
         .catch(function(erro) {
