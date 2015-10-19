@@ -5,7 +5,6 @@ describe('alt.passaporte-auth-generico', function() {
      var _locationMock;
      var _httpMock;
      var _scope;
-     var _xtorage;
 
      var CHAVE_USUARIO;
      var CHAVE_INFORMACOES;
@@ -41,7 +40,10 @@ describe('alt.passaporte-auth-generico', function() {
                                   return null;
                              }
                         }
-                   ]
+                   ],
+                   localStorage: {
+                     setItem: angular.noop
+                   }
               });
      }));
 
@@ -49,7 +51,6 @@ describe('alt.passaporte-auth-generico', function() {
           _windowMock = $injector.get('$window');
           _locationMock = $injector.get('$location');
           _httpMock = $injector.get('$httpBackend');
-          _xtorage = $injector.get('$xtorage');
           _scope = $injector.get('$rootScope').$new();
 
           CHAVE_USUARIO = $injector.get('CHAVE_USUARIO');
@@ -61,8 +62,8 @@ describe('alt.passaporte-auth-generico', function() {
           UsuarioInfo = $injector.get('UsuarioInfo');
           PassaporteService = $injector.get('PassaporteService');
 
-          spyOn(_xtorage, 'save').and.callFake(angular.noop);
-     }))
+          spyOn(_windowMock.localStorage, 'setItem').and.callFake(angular.noop);
+        }))
 
      describe('CHAVE_USUARIO', function() {
           it('deve ter o valor correto na constante', function() {
