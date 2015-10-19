@@ -40,7 +40,7 @@
 		
 		<script>
 			angular
-			  .module('pass-auth-app', ['alt-passaporte-auth-generico'])
+			  .module('pass-auth-app', ['alt.passaporte-auth-generico'])
 			  .config(['PaginaUsuarioLogadoProvider', function(PaginaUsuarioLogadoProvider) {
 			    PaginaUsuarioLogadoProvider.url = '/minha-url-usuario-logado';
 			  }]);
