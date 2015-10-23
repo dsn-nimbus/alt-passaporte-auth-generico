@@ -4,6 +4,7 @@
   ng.module('alt.passaporte-auth-generico', [])
   .constant('CHAVE_USUARIO', 'pass_usuario_auth')
   .constant('CHAVE_INFORMACOES', 'info')
+  .constant('CHAVE_ID_PRODUTO', 'idProduto')
   .constant('PASSAPORTE_API_AUTHORIZATION_BASE',  'https://passaporte2-dev.alterdata.com.br/passaporte-rest-api/rest/authorization')
   .config(['$httpProvider', function($httpProvider) {
     delete $httpProvider.defaults.headers.common['X-Requested-With']; // fix para que não vá OPTIONS ao invés de GET na requisição feita ao servidor
@@ -23,22 +24,23 @@
       return $location.search()[chave];
     };
   }])
-  .service('PassaporteService', ['$http', 'PASSAPORTE_API_AUTHORIZATION_BASE', function($http, PASSAPORTE_API_AUTHORIZATION_BASE) {
-    this.pegaInformacoesPorToken = function(tokenPassaporte) {
-      return $http.get(PASSAPORTE_API_AUTHORIZATION_BASE + '?token=' + tokenPassaporte)
+  .service('PassaporteService', ['$http', 'LeitorUrl', 'PASSAPORTE_API_AUTHORIZATION_BASE', function($http, LeitorUrl, PASSAPORTE_API_AUTHORIZATION_BASE) {
+    this.pegaInformacoesPorToken = function(tokenPassaporte, idProduto) {
+      return $http.get(PASSAPORTE_API_AUTHORIZATION_BASE + '?token=' + tokenPassaporte + '&idProduto=' + idProduto)
                   .then(function(info) {
                     return info.data;
                   });
     };
   }])
-  .service('UsuarioInfo', ['$window', '$log', 'LeitorUrl', 'PassaporteService', 'CHAVE_USUARIO', 'CHAVE_INFORMACOES', 'PaginaUsuarioLogado',
-  function($window, $log, LeitorUrl, PassaporteService, CHAVE_USUARIO, CHAVE_INFORMACOES, PaginaUsuarioLogado) {
+  .service('UsuarioInfo', ['$window', '$log', 'LeitorUrl', 'PassaporteService', 'CHAVE_USUARIO', 'CHAVE_INFORMACOES', 'CHAVE_ID_PRODUTO', 'PaginaUsuarioLogado',
+  function($window, $log, LeitorUrl, PassaporteService, CHAVE_USUARIO, CHAVE_INFORMACOES, CHAVE_ID_PRODUTO, PaginaUsuarioLogado) {
 
     var _infoTokenPassaporte = LeitorUrl.getValorPor(CHAVE_INFORMACOES);
+    var _idProduto = LeitorUrl.getValorPor(CHAVE_ID_PRODUTO);
 
     this.registraInformacoes = function registraInformacoes() {
       PassaporteService
-        .pegaInformacoesPorToken(_infoTokenPassaporte)
+        .pegaInformacoesPorToken(_infoTokenPassaporte, _idProduto)
         .then(function(usuario) {
           $window.localStorage.setItem(CHAVE_USUARIO, JSON.stringify(usuario));
           $window.location.replace(PaginaUsuarioLogado);
