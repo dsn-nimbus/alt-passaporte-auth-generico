@@ -25,16 +25,18 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 		
 		<script>
-		!function(o){"use strict";o.module("alt.passaporte-auth-generico",[])
+		!function(o){"use strict";
+		o.module("alt.passaporte-auth-generico",[])
 		.constant("CHAVE_USUARIO","pass_usuario_auth")
 		.constant("CHAVE_INFORMACOES","info")
+		.constant("CHAVE_ID_PRODUTO","idProduto")
 		.constant("PASSAPORTE_API_AUTHORIZATION_BASE","https://passaporte2-dev.alterdata.com.br/passaporte-rest-api/rest/authorization")
 		.config(["$httpProvider",function(o){delete o.defaults.headers.common["X-Requested-With"]}])
 		.config(["$locationProvider",function(o){o.html5Mode(!0)}])
 		.provider("PaginaUsuarioLogado",function(){this.url="/",this.$get=function(){return this.url}})
 		.service("LeitorUrl",["$location",function(o){this.getValorPor=function(t){return o.search()[t]}}])
-		.service("PassaporteService",["$http","PASSAPORTE_API_AUTHORIZATION_BASE",function(o,t){this.pegaInformacoesPorToken=function(r){return o.get(t+"?token="+r).then(function(o){return o.data})}}])
-		.service("UsuarioInfo",["$window","$log","LeitorUrl","PassaporteService","CHAVE_USUARIO","CHAVE_INFORMACOES","PaginaUsuarioLogado",function(o,t,r,e,n,a,i){var s=r.getValorPor(a);this.registraInformacoes=function(){e.pegaInformacoesPorToken(s).then(function(t){o.localStorage.setItem(n,JSON.stringify(t)),o.location.replace(i)})["catch"](function(r){o.alert("Erro ao buscar as informações pelo token (passaporte)."),t.error(r)})}}])
+		.service("PassaporteService",["$http","LeitorUrl","PASSAPORTE_API_AUTHORIZATION_BASE",function(o,t,r){this.pegaInformacoesPorToken=function(t,e){return o.get(r+"?token="+t+"&idProduto="+e).then(function(o){return o.data})}}])
+		.service("UsuarioInfo",["$window","$log","LeitorUrl","PassaporteService","CHAVE_USUARIO","CHAVE_INFORMACOES","CHAVE_ID_PRODUTO","PaginaUsuarioLogado",function(o,t,r,e,n,a,i,s){var c=r.getValorPor(a),u=r.getValorPor(i);this.registraInformacoes=function(){e.pegaInformacoesPorToken(c,u).then(function(t){o.localStorage.setItem(n,JSON.stringify(t)),o.location.replace(s)})["catch"](function(r){o.alert("Erro ao buscar as informações pelo token (passaporte)."),t.error(r)})}}])
 		.controller("AuthCtrl",["UsuarioInfo",function(o){!function(){o.registraInformacoes()}()}])}(window.angular);
 		</script>
 		
