@@ -32,28 +32,38 @@
                   });
     };
   }])
-  .service('UsuarioInfo', ['$window', '$log', 'LeitorUrl', 'PassaporteService', 'CHAVE_USUARIO', 'CHAVE_INFORMACOES', 'CHAVE_ID_PRODUTO', 'PaginaUsuarioLogado',
-  function($window, $log, LeitorUrl, PassaporteService, CHAVE_USUARIO, CHAVE_INFORMACOES, CHAVE_ID_PRODUTO, PaginaUsuarioLogado) {
+  .service('UsuarioInfo', ['$window', '$log', '$q', 'LeitorUrl', 'PassaporteService', 'CHAVE_USUARIO', 'CHAVE_INFORMACOES', 'CHAVE_ID_PRODUTO', 'PaginaUsuarioLogado',
+  function($window, $log, $q, LeitorUrl, PassaporteService, CHAVE_USUARIO, CHAVE_INFORMACOES, CHAVE_ID_PRODUTO, PaginaUsuarioLogado) {
 
     var _infoTokenPassaporte = LeitorUrl.getValorPor(CHAVE_INFORMACOES);
     var _idProduto = LeitorUrl.getValorPor(CHAVE_ID_PRODUTO);
 
-    this.registraInformacoes = function registraInformacoes() {
-      PassaporteService
-        .pegaInformacoesPorToken(_infoTokenPassaporte, _idProduto)
-        .then(function(usuario) {
-          $window.localStorage.setItem(CHAVE_USUARIO, JSON.stringify(usuario));
-          $window.location.replace(PaginaUsuarioLogado);
-        })
-        .catch(function(erro) {
-          $window.alert('Erro ao buscar as informações pelo token (passaporte).');
-          $log.error(erro);
-        });
+    this.registraInformacoesRedireciona = function registraInformacoes() {
+      this.registraInformacoesApenas()
+          .then(function() {
+            $window.location.replace(PaginaUsuarioLogado);
+          });
+    };
+
+    this.registraInformacoesApenas = function registraInformacoesSemRedirecionamento() {
+      return PassaporteService
+              .pegaInformacoesPorToken(_infoTokenPassaporte, _idProduto)
+              .then(function(usuario) {
+                $window.localStorage.setItem(CHAVE_USUARIO, JSON.stringify(usuario));
+
+                return usuario;
+              })
+              .catch(function(erro) {
+                $window.alert('Erro ao buscar as informações pelo token (passaporte).');
+                $log.error(erro);
+
+                return $q.reject(erro);
+              });
     };
   }])
   .controller('AuthCtrl', ['UsuarioInfo', function(UsuarioInfo) {
     ;(function() {
-      UsuarioInfo.registraInformacoes();
+      UsuarioInfo.registraInformacoesRedireciona();
     }());
   }]);
 }(window.angular));

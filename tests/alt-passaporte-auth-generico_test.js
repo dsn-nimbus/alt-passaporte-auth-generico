@@ -119,16 +119,17 @@ describe('alt.passaporte-auth-generico', function() {
      })
 
      describe('UsuarioInfo', function() {
-          describe('registraInformações', function() {
+          describe('registraInformaçõesApenas', function() {
                it('NÃO deve registrar as informações gerais do usuário (após ter ido buscar no passaporte) - Passaporte retorna erro', function() {
                     spyOn(_windowMock.location, 'replace').and.callFake(angular.noop);
                     _httpMock.expectGET('https://passaporte2-dev.alterdata.com.br/passaporte-rest-api/rest/authorization?token=' + _info + '&idProduto=' + _idProduto).respond(403);
 
-                    UsuarioInfo.registraInformacoes();
+                    UsuarioInfo.registraInformacoesApenas();
 
                     _httpMock.flush();
 
                     expect(_windowMock.location.replace).not.toHaveBeenCalledWith('/abc');
+                    expect(_windowMock.localStorage.setItem).not.toHaveBeenCalled();
                })
 
                it('deve registrar as informações gerais do usuário (após ter ido buscar no passaporte) - INFORMAÇÕES ABERTAS DO USUARIO', function() {
@@ -143,11 +144,12 @@ describe('alt.passaporte-auth-generico', function() {
 
                     _httpMock.expectGET('https://passaporte2-dev.alterdata.com.br/passaporte-rest-api/rest/authorization?token=' + _info + '&idProduto=' + _idProduto).respond(_respostaServidor);
 
-                    UsuarioInfo.registraInformacoes();
+                    UsuarioInfo.registraInformacoesApenas();
 
                     _httpMock.flush();
 
-                    expect(_windowMock.location.replace).toHaveBeenCalledWith('/abc');
+                    expect(_windowMock.location.replace).not.toHaveBeenCalled();
+                    expect(_windowMock.localStorage.setItem).toHaveBeenCalledWith('pass_usuario_auth', JSON.stringify(_respostaServidor));
                })
 
                it('deve registrar as informações gerais do usuário (após ter ido buscar no passaporte) - INFORMAÇÕES FECHADAS DO USUARIO', function() {
@@ -162,11 +164,66 @@ describe('alt.passaporte-auth-generico', function() {
 
                     _httpMock.expectGET('https://passaporte2-dev.alterdata.com.br/passaporte-rest-api/rest/authorization?token=' + _info + '&idProduto=' + _idProduto).respond(_respostaServidor);
 
-                    UsuarioInfo.registraInformacoes();
+                    UsuarioInfo.registraInformacoesApenas();
+
+                    _httpMock.flush();
+
+                    expect(_windowMock.location.replace).not.toHaveBeenCalled();
+                    expect(_windowMock.localStorage.setItem).toHaveBeenCalledWith('pass_usuario_auth', JSON.stringify(_respostaServidor));
+               })
+          })
+
+          describe('registraInformações', function() {
+               it('NÃO deve registrar as informações gerais do usuário (após ter ido buscar no passaporte) - Passaporte retorna erro', function() {
+                    spyOn(_windowMock.location, 'replace').and.callFake(angular.noop);
+                    _httpMock.expectGET('https://passaporte2-dev.alterdata.com.br/passaporte-rest-api/rest/authorization?token=' + _info + '&idProduto=' + _idProduto).respond(403);
+
+                    UsuarioInfo.registraInformacoesRedireciona();
+
+                    _httpMock.flush();
+
+                    expect(_windowMock.location.replace).not.toHaveBeenCalledWith('/abc');
+                    expect(_windowMock.localStorage.setItem).not.toHaveBeenCalled();
+               })
+
+               it('deve registrar as informações gerais do usuário (após ter ido buscar no passaporte) - INFORMAÇÕES ABERTAS DO USUARIO', function() {
+                    var _respostaServidor = {
+                         Nome: 'Eric',
+                         imagem: 'http://alguma-servidor.com/abc.jpg',
+                         Perfil: 'Adm',
+                         assinantes: [{Nome: 'A', CNPJ: '1234567891234'}]
+                    }
+
+                    spyOn(_windowMock.location, 'replace').and.callFake(angular.noop);
+
+                    _httpMock.expectGET('https://passaporte2-dev.alterdata.com.br/passaporte-rest-api/rest/authorization?token=' + _info + '&idProduto=' + _idProduto).respond(_respostaServidor);
+
+                    UsuarioInfo.registraInformacoesRedireciona();
 
                     _httpMock.flush();
 
                     expect(_windowMock.location.replace).toHaveBeenCalledWith('/abc');
+                    expect(_windowMock.localStorage.setItem).toHaveBeenCalledWith('pass_usuario_auth', JSON.stringify(_respostaServidor));
+               })
+
+               it('deve registrar as informações gerais do usuário (após ter ido buscar no passaporte) - INFORMAÇÕES FECHADAS DO USUARIO', function() {
+                    var _respostaServidor = {
+                         Nome: 'Eric',
+                         imagem: 'http://alguma-servidor.com/abc.jpg',
+                         Perfil: 'Adm',
+                         assinantes: [{Nome: 'A', CNPJ: '1234567891234'}]
+                    }
+
+                    spyOn(_windowMock.location, 'replace').and.callFake(angular.noop);
+
+                    _httpMock.expectGET('https://passaporte2-dev.alterdata.com.br/passaporte-rest-api/rest/authorization?token=' + _info + '&idProduto=' + _idProduto).respond(_respostaServidor);
+
+                    UsuarioInfo.registraInformacoesRedireciona();
+
+                    _httpMock.flush();
+
+                    expect(_windowMock.location.replace).toHaveBeenCalledWith('/abc');
+                    expect(_windowMock.localStorage.setItem).toHaveBeenCalledWith('pass_usuario_auth', JSON.stringify(_respostaServidor));
                })
           })
      })
@@ -178,12 +235,12 @@ describe('alt.passaporte-auth-generico', function() {
                _httpMock.expectGET('https://passaporte2-dev.alterdata.com.br/passaporte-rest-api/rest/authorization?token=' + _info + '&idProduto=' + _idProduto).respond(200);
           })
 
-          it('deve chamar registraInformacoes', inject(function($controller) {
-               spyOn(UsuarioInfo, 'registraInformacoes').and.callFake(angular.noop);
+          it('deve chamar registraInformacoesRedireciona', inject(function($controller) {
+               spyOn(UsuarioInfo, 'registraInformacoesRedireciona').and.callFake(angular.noop);
 
                $controller(NOME_CONTROLLER, {$scope: _scope});
 
-               expect(UsuarioInfo.registraInformacoes).toHaveBeenCalled();
+               expect(UsuarioInfo.registraInformacoesRedireciona).toHaveBeenCalled();
           }))
      })
 })
