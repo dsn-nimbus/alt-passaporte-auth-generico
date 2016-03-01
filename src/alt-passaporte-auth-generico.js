@@ -32,17 +32,19 @@
                   });
     };
   }])
-  .service('UsuarioInfo', ['$window', '$log', '$q', 'LeitorUrl', 'PassaporteService', 'CHAVE_USUARIO', 'CHAVE_INFORMACOES', 'CHAVE_ID_PRODUTO', 'PaginaUsuarioLogado',
-  function($window, $log, $q, LeitorUrl, PassaporteService, CHAVE_USUARIO, CHAVE_INFORMACOES, CHAVE_ID_PRODUTO, PaginaUsuarioLogado) {
+  .factory('redirecionaPaginaUsuarioLogado', ['$window', 'PaginaUsuarioLogado', function($window, PaginaUsuarioLogado) {
+    return function() {
+      $window.location.replace(PaginaUsuarioLogado);
+    }
+  }])
+  .service('UsuarioInfo', ['$window', '$log', '$q', 'redirecionaPaginaUsuarioLogado', 'LeitorUrl', 'PassaporteService', 'CHAVE_USUARIO', 'CHAVE_INFORMACOES', 'CHAVE_ID_PRODUTO', 'PaginaUsuarioLogado',
+  function($window, $log, $q, redirecionaPaginaUsuarioLogado, LeitorUrl, PassaporteService, CHAVE_USUARIO, CHAVE_INFORMACOES, CHAVE_ID_PRODUTO, PaginaUsuarioLogado) {
 
     var _infoTokenPassaporte = LeitorUrl.getValorPor(CHAVE_INFORMACOES);
     var _idProduto = LeitorUrl.getValorPor(CHAVE_ID_PRODUTO);
 
     this.registraInformacoesRedireciona = function registraInformacoes() {
-      this.registraInformacoesApenas()
-          .then(function() {
-            $window.location.replace(PaginaUsuarioLogado);
-          });
+      this.registraInformacoesApenas().then(redirecionaPaginaUsuarioLogado);
     };
 
     this.registraInformacoesApenas = function registraInformacoesSemRedirecionamento() {
