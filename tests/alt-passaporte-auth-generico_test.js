@@ -133,9 +133,6 @@ describe('alt.passaporte-auth-generico', function() {
 
                     expect(_windowMock.location.replace).not.toHaveBeenCalledWith('/abc');
                     expect(_windowMock.localStorage.setItem).not.toHaveBeenCalled();
-
-                    expect(_windowMock.localStorage.clear).toHaveBeenCalled();
-                    expect(_windowMock.sessionStorage.clear).toHaveBeenCalled();
                })
 
                it('deve registrar as informações gerais do usuário (após ter ido buscar no passaporte) - INFORMAÇÕES ABERTAS DO USUARIO', function() {
@@ -156,9 +153,6 @@ describe('alt.passaporte-auth-generico', function() {
 
                     expect(_windowMock.location.replace).not.toHaveBeenCalled();
                     expect(_windowMock.localStorage.setItem).toHaveBeenCalledWith('pass_usuario_auth', JSON.stringify(_respostaServidor));
-
-                    expect(_windowMock.localStorage.clear).toHaveBeenCalled();
-                    expect(_windowMock.sessionStorage.clear).toHaveBeenCalled();
                })
 
                it('deve registrar as informações gerais do usuário (após ter ido buscar no passaporte) - INFORMAÇÕES FECHADAS DO USUARIO', function() {
@@ -179,9 +173,6 @@ describe('alt.passaporte-auth-generico', function() {
 
                     expect(_windowMock.location.replace).not.toHaveBeenCalled();
                     expect(_windowMock.localStorage.setItem).toHaveBeenCalledWith('pass_usuario_auth', JSON.stringify(_respostaServidor));
-
-                    expect(_windowMock.localStorage.clear).toHaveBeenCalled();
-                    expect(_windowMock.sessionStorage.clear).toHaveBeenCalled();
                })
           })
 
@@ -196,9 +187,6 @@ describe('alt.passaporte-auth-generico', function() {
 
                     expect(_windowMock.location.replace).not.toHaveBeenCalledWith('/abc');
                     expect(_windowMock.localStorage.setItem).not.toHaveBeenCalled();
-
-                    expect(_windowMock.localStorage.clear).toHaveBeenCalled();
-                    expect(_windowMock.sessionStorage.clear).toHaveBeenCalled();
                })
 
                it('deve registrar as informações gerais do usuário (após ter ido buscar no passaporte) - INFORMAÇÕES ABERTAS DO USUARIO', function() {
@@ -219,9 +207,6 @@ describe('alt.passaporte-auth-generico', function() {
 
                     expect(_windowMock.location.replace).toHaveBeenCalledWith('/abc');
                     expect(_windowMock.localStorage.setItem).toHaveBeenCalledWith('pass_usuario_auth', JSON.stringify(_respostaServidor));
-
-                    expect(_windowMock.localStorage.clear).toHaveBeenCalled();
-                    expect(_windowMock.sessionStorage.clear).toHaveBeenCalled();
                })
 
                it('deve registrar as informações gerais do usuário (após ter ido buscar no passaporte) - INFORMAÇÕES FECHADAS DO USUARIO', function() {
@@ -242,9 +227,6 @@ describe('alt.passaporte-auth-generico', function() {
 
                     expect(_windowMock.location.replace).toHaveBeenCalledWith('/abc');
                     expect(_windowMock.localStorage.setItem).toHaveBeenCalledWith('pass_usuario_auth', JSON.stringify(_respostaServidor));
-
-                    expect(_windowMock.localStorage.clear).toHaveBeenCalled();
-                    expect(_windowMock.sessionStorage.clear).toHaveBeenCalled();
                })
           })
      })
