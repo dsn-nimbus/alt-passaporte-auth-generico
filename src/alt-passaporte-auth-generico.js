@@ -48,6 +48,9 @@
     };
 
     this.registraInformacoesApenas = function registraInformacoesSemRedirecionamento() {
+      $window.localStorage.clear();
+      $window.sessionStorage.clear();
+
       return PassaporteService
               .pegaInformacoesPorToken(_infoTokenPassaporte, _idProduto)
               .then(function(usuario) {
