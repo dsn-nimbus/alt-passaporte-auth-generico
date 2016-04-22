@@ -5,7 +5,7 @@
   .constant('CHAVE_USUARIO', 'pass_usuario_auth')
   .constant('CHAVE_INFORMACOES', 'info')
   .constant('CHAVE_ID_PRODUTO', 'idProduto')
-  .constant('PASSAPORTE_API_AUTHORIZATION_BASE',  'https://passaporte2-dev.alterdata.com.br/passaporte-rest-api/rest/authorization')
+  .constant('PASSAPORTE_API_AUTHORIZATION_BASE',  altAmbienteUrl.getEndpoint('https://passaporte2__ambiente__.alterdata.com.br/passaporte-rest-api/rest/authorization'))
   .config(['$httpProvider', function($httpProvider) {
     delete $httpProvider.defaults.headers.common['X-Requested-With']; // fix para que não vá OPTIONS ao invés de GET na requisição feita ao servidor
   }])

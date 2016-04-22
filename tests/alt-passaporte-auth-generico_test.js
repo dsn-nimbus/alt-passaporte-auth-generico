@@ -101,7 +101,7 @@ describe('alt.passaporte-auth-generico', function() {
 
      describe('PASSAPORTE_API_AUTHORIZATION_BASE', function() {
           it('deve ter o valor correto na constante', function() {
-               var _url = 'https://passaporte2-dev.alterdata.com.br/passaporte-rest-api/rest/authorization';
+               var _url = 'https://passaporte2.alterdata.com.br/passaporte-rest-api/rest/authorization';
 
                expect(PASSAPORTE_API_AUTHORIZATION_BASE).toEqual(_url);
           });
@@ -125,7 +125,7 @@ describe('alt.passaporte-auth-generico', function() {
           describe('registraInformaçõesApenas', function() {
                it('NÃO deve registrar as informações gerais do usuário (após ter ido buscar no passaporte) - Passaporte retorna erro', function() {
                     spyOn(_windowMock.location, 'replace').and.callFake(angular.noop);
-                    _httpMock.expectGET('https://passaporte2-dev.alterdata.com.br/passaporte-rest-api/rest/authorization?token=' + _info + '&idProduto=' + _idProduto).respond(403);
+                    _httpMock.expectGET('https://passaporte2.alterdata.com.br/passaporte-rest-api/rest/authorization?token=' + _info + '&idProduto=' + _idProduto).respond(403);
 
                     UsuarioInfo.registraInformacoesApenas();
 
@@ -145,7 +145,7 @@ describe('alt.passaporte-auth-generico', function() {
 
                     spyOn(_windowMock.location, 'replace').and.callFake(angular.noop);
 
-                    _httpMock.expectGET('https://passaporte2-dev.alterdata.com.br/passaporte-rest-api/rest/authorization?token=' + _info + '&idProduto=' + _idProduto).respond(_respostaServidor);
+                    _httpMock.expectGET('https://passaporte2.alterdata.com.br/passaporte-rest-api/rest/authorization?token=' + _info + '&idProduto=' + _idProduto).respond(_respostaServidor);
 
                     UsuarioInfo.registraInformacoesApenas();
 
@@ -165,7 +165,7 @@ describe('alt.passaporte-auth-generico', function() {
 
                     spyOn(_windowMock.location, 'replace').and.callFake(angular.noop);
 
-                    _httpMock.expectGET('https://passaporte2-dev.alterdata.com.br/passaporte-rest-api/rest/authorization?token=' + _info + '&idProduto=' + _idProduto).respond(_respostaServidor);
+                    _httpMock.expectGET('https://passaporte2.alterdata.com.br/passaporte-rest-api/rest/authorization?token=' + _info + '&idProduto=' + _idProduto).respond(_respostaServidor);
 
                     UsuarioInfo.registraInformacoesApenas();
 
@@ -179,7 +179,7 @@ describe('alt.passaporte-auth-generico', function() {
           describe('registraInformações', function() {
                it('NÃO deve registrar as informações gerais do usuário (após ter ido buscar no passaporte) - Passaporte retorna erro', function() {
                     spyOn(_windowMock.location, 'replace').and.callFake(angular.noop);
-                    _httpMock.expectGET('https://passaporte2-dev.alterdata.com.br/passaporte-rest-api/rest/authorization?token=' + _info + '&idProduto=' + _idProduto).respond(403);
+                    _httpMock.expectGET('https://passaporte2.alterdata.com.br/passaporte-rest-api/rest/authorization?token=' + _info + '&idProduto=' + _idProduto).respond(403);
 
                     UsuarioInfo.registraInformacoesRedireciona();
 
@@ -199,7 +199,7 @@ describe('alt.passaporte-auth-generico', function() {
 
                     spyOn(_windowMock.location, 'replace').and.callFake(angular.noop);
 
-                    _httpMock.expectGET('https://passaporte2-dev.alterdata.com.br/passaporte-rest-api/rest/authorization?token=' + _info + '&idProduto=' + _idProduto).respond(_respostaServidor);
+                    _httpMock.expectGET('https://passaporte2.alterdata.com.br/passaporte-rest-api/rest/authorization?token=' + _info + '&idProduto=' + _idProduto).respond(_respostaServidor);
 
                     UsuarioInfo.registraInformacoesRedireciona();
 
@@ -219,7 +219,7 @@ describe('alt.passaporte-auth-generico', function() {
 
                     spyOn(_windowMock.location, 'replace').and.callFake(angular.noop);
 
-                    _httpMock.expectGET('https://passaporte2-dev.alterdata.com.br/passaporte-rest-api/rest/authorization?token=' + _info + '&idProduto=' + _idProduto).respond(_respostaServidor);
+                    _httpMock.expectGET('https://passaporte2.alterdata.com.br/passaporte-rest-api/rest/authorization?token=' + _info + '&idProduto=' + _idProduto).respond(_respostaServidor);
 
                     UsuarioInfo.registraInformacoesRedireciona();
 
@@ -235,7 +235,7 @@ describe('alt.passaporte-auth-generico', function() {
           var NOME_CONTROLLER = 'AuthCtrl';
 
           beforeEach(function() {
-               _httpMock.expectGET('https://passaporte2-dev.alterdata.com.br/passaporte-rest-api/rest/authorization?token=' + _info + '&idProduto=' + _idProduto).respond(200);
+               _httpMock.expectGET('https://passaporte2.alterdata.com.br/passaporte-rest-api/rest/authorization?token=' + _info + '&idProduto=' + _idProduto).respond(200);
           })
 
           it('deve chamar registraInformacoesRedireciona', inject(function($controller) {

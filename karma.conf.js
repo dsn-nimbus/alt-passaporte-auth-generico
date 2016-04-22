@@ -18,6 +18,7 @@ var _karma = function(config)
     files: [
       'bower_components/angular/angular.js',
       'bower_components/ng-xtorage/ng-xtorage.min.js',
+      'bower_components/alt-ambiente-url/dist/alt-ambiente-url.min.js',
 
       'bower_components/angular-mocks/angular-mocks.js',
 
