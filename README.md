@@ -19,18 +19,18 @@
 
         <title>Exemplo Sistema</title>
 	</head>
-	
+
 	<body ng-controller="AuthCtrl">
-		
+
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-		
+
 		<script>
 		!function(o){"use strict";
 		o.module("alt.passaporte-auth-generico",[])
 		.constant("CHAVE_USUARIO","pass_usuario_auth")
 		.constant("CHAVE_INFORMACOES","info")
 		.constant("CHAVE_ID_PRODUTO","idProduto")
-		.constant("PASSAPORTE_API_AUTHORIZATION_BASE","https://passaporte2-dev.alterdata.com.br/passaporte-rest-api/rest/authorization")
+		.constant("PASSAPORTE_API_AUTHORIZATION_BASE",altAmbienteUrl.getEndpoint("https://passaporte2__ambiente__.alterdata.com.br/passaporte-rest-api/rest/authorization"))
 		.config(["$httpProvider",function(o){delete o.defaults.headers.common["X-Requested-With"]}])
 		.config(["$locationProvider",function(o){o.html5Mode(!0)}])
 		.provider("PaginaUsuarioLogado",function(){this.url="/",this.$get=function(){return this.url}})
@@ -39,7 +39,7 @@
 		.service("UsuarioInfo",["$window","$log","LeitorUrl","PassaporteService","CHAVE_USUARIO","CHAVE_INFORMACOES","CHAVE_ID_PRODUTO","PaginaUsuarioLogado",function(o,t,r,e,n,a,i,s){var c=r.getValorPor(a),u=r.getValorPor(i);this.registraInformacoes=function(){e.pegaInformacoesPorToken(c,u).then(function(t){o.localStorage.setItem(n,JSON.stringify(t)),o.location.replace(s)})["catch"](function(r){o.alert("Erro ao buscar as informações pelo token (passaporte)."),t.error(r)})}}])
 		.controller("AuthCtrl",["UsuarioInfo",function(o){!function(){o.registraInformacoes()}()}])}(window.angular);
 		</script>
-		
+
 		<script>
 			angular
 			  .module('pass-auth-app', ['alt.passaporte-auth-generico'])
@@ -50,4 +50,3 @@
 	</body>
 </html>
 ```
-
